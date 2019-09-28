@@ -20,6 +20,7 @@
     "uuid": "^3.3.3"
   },
   "scripts": {
-    "dev": "next ."
+    "dev": "next .",
+    "build": "next build"
   }
 }
