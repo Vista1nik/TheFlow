@@ -3,6 +3,7 @@ export default (props) => (
         <style jsx>{`
             a {
                 padding: ${props.height} 32px;
+                margin-right: ${props.marginRight};
                 display: block;
                 width: fit-content;
                 background-color: ${props.bgColor};
