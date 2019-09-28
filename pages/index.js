@@ -49,6 +49,32 @@ export default class Index extends Component {
                     .container {
                         margin: 48px;
                     }
+
+                    @media screen and (max-width: 786px) {
+                        .landing {
+                            flex-direction: column-reverse;
+                        }
+                    }
+
+                    @media screen and (max-width: 628px) {
+                        .landing-art {
+                            height: 325px;
+                        }
+
+                        h1 {
+                            font-size: 42px;
+                            font-family: 'Raleway', sans-serif;
+                        }
+
+                        p {
+                            font-size: 18px;
+                            font-family: 'Montserrat', sans-serif;
+                        }
+
+                        .landing-text-container {
+                            width: fit-content;
+                        }                                                 
+                    }
                 `}</style>
                 <Header shadow={true} />
                     <div className="container">

@@ -206,6 +206,7 @@ class FlowObject extends Component {
                         width: 142px;
                         height: 142px;
                         display: flex;
+                        margin: 24px 0;
                         margin-left: 324px;
                         justify-content: center;
                         align-items: center;
@@ -261,6 +262,22 @@ class FlowObject extends Component {
                         height: 48px;
                         width: 48px;
                     }
+
+                    @media screen and (max-width: 1092px) {
+                        .circle-container {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex-direction: column;
+                        }
+
+                        .circle {
+                            margin: 24px 0;
+                        }
+                        
+                        .edit {
+                            margin-bottom: 24px;
+                        }
                 `}</style>
                 <div className="flow-container">
                     <img src='/static/dots.svg' />
@@ -389,6 +406,23 @@ class CreateFlowObject extends Component {
                     .favicon {
                         height: 48px;
                         width: 48px;
+                    }
+
+                    @media screen and (max-width: 1092px) {
+                        .circle-container {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            flex-direction: column;
+                        }
+
+                        .circle {
+                            margin: 24px 0;
+                        }
+                        
+                        .edit {
+                            margin-bottom: 24px;
+                        }
                     }
                 `}</style>
                 <div className="flow-container">

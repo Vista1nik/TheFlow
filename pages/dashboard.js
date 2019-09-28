@@ -87,6 +87,20 @@ export default class Dashboard extends Component {
                         grid-row-gap: 20px;
                     }
 
+
+                    @media screen and (max-width: 1092px) {
+
+                        .dashboard-grid {
+                            margin-top: 48px;
+                            display: grid;
+                            grid-template-columns: 1fr;
+                            grid-template-rows: 1fr;
+                            grid-column-gap: 20px;
+                            grid-row-gap: 20px;
+                            justify-items: center;
+                            
+                        }
+                    }
                 `}</style>
                 <Header shadow={true} />
                 <div className="dashboard">
