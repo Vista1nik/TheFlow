@@ -10,14 +10,28 @@ export default class Login extends Component {
     
     componentDidMount() {
             if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-
+                let db = firebase.firestore()
                 let email = window.localStorage.getItem('emailForSignIn');
                 if (!email) {
                   email = window.prompt('Please provide your email for confirmation');
                 }
                 firebase.auth().signInWithEmailLink(email, window.location.href)
                   .then(function(result) {
-                    window.localStorage.removeItem('emailForSignIn');
+                    if (result.additionalUserInfo.isNewUser) {
+                        db.collection('flows').doc(result.user.uid).collection('userflows').doc('default')
+                        .set({
+                            flowname: 'Default Flow',
+                            flowdesc: 'Your first flow.',
+                            flow: []
+                        })
+                        .then(res => {
+                            window.localStorage.removeItem('emailForSignIn');
+                            window.location = '/dashboard'
+                        })
+                    } else {
+                        window.localStorage.removeItem('emailForSignIn');
+                        window.location = '/dashboard'
+                    }
                   })
                   .catch(function(error) {
                     alert(error)

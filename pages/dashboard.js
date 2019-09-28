@@ -42,7 +42,7 @@ export default class Dashboard extends Component {
                     }
                 })
             } else {
-                console.log("No user detected!")
+                window.location = '/auth'
             }
     })
     }
@@ -96,6 +96,7 @@ export default class Dashboard extends Component {
                             <h1>Welcome to your Dashboard</h1>
                             <p>Here you can see your flows and create new ones!</p>
                             <p className='tip'>TIP: To edit information about flow click on title or description.</p>
+                            <p className='tip'>To open Flow, click on arrow in top right corner of card.</p>
                         </div>
                         <div className="dashboard-grid">
                             {this.state.flows.map(flow => <FlowCard userid={this.state.userid} id={flow.id} title={flow.flowname} desc={flow.flowdesc} />)}
@@ -227,7 +228,8 @@ class CreateFlowCard extends Component {
         db.collection('flows').doc(this.props.userid).collection('userflows').doc(uuid())
         .set({
             flowname: this.state.title,
-            flowdesc: this.state.desc
+            flowdesc: this.state.desc,
+            flow: []
         })
         .then(res => {
             window.location = '/dashboard'

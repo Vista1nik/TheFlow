@@ -43,6 +43,7 @@ class MyApp extends App {
       <>
         <Head>
           <title>TheFlow</title>
+          <link rel="icon" href="/static/favicon.ico" />
         </Head>
         <Component {...pageProps} />
       </>

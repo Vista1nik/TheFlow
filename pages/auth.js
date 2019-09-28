@@ -118,7 +118,7 @@ class AuthForm extends Component {
                 {!this.state.sended ? 
                     <div>
                         <p>Email</p>
-                        <input ref={this.email} type="email" placeholder="Type here your email"/>
+                        <input type="email" id="email" ref={this.email} type="email" placeholder="Type here your email"/>
                         <Button onClick={this.authUser} className="auth-signin" height={'12px'} bgColor={'#3C72FF'}>Sign-in</Button>
                     </div>
                     :

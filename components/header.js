@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 
+import Gravatar from 'react-gravatar'
+
 export default class Header extends Component {
 
     state = {
-        loggedin: false
+        loggedin: false,
+        email: null
     }
 
     componentDidMount() {
             firebase.auth().onAuthStateChanged(user => {
                 if (user) {
                     this.setState({
-                        loggedin: true
+                        loggedin: true,
+                        email: user.email
                     })
                 } else {
                     console.log("No user detected!")
@@ -45,6 +49,11 @@ export default class Header extends Component {
                         align-items: center;
                     }
 
+                    .header-right {
+                        display: flex;
+                        align-items: center;
+                    }
+
                     .link {
                         margin-left: 24px;
                     }
@@ -61,6 +70,17 @@ export default class Header extends Component {
                         color: #666;
                         transition: all 0.2s ease 0s;
                     }
+
+                    .avatar {
+                        border-radius: 50%;
+                        height: 32px;
+                        width: 32px;
+                        margin-right: 12px;
+                    }
+
+                    .email {
+                        font-family: 'Montserrat', sans-serif;
+                    }
                 `}</style>
                 <div className='header'>
                     <div className="header-left">
@@ -73,12 +93,16 @@ export default class Header extends Component {
                             <a href='/' className='link'>About</a>
                         </div>
                     </div>
-                    <div className="header-right">
-                        {this.state.loggedin ? <a onClick={() => {
+                    <div>
+                        {this.state.loggedin ? <div className="header-right">
+                            <Gravatar className="avatar" email={this.state.email} />
+                            <a className="email">{this.state.email}</a>
+                            <a onClick={() => {
                             firebase.auth().signOut().then(() => {
                                 window.location = '/'
                             })
-                        }} className='link'>Log-out</a> : ''}
+                        }} className='link'>Log-out</a>
+                        </div> : ''}
                     </div>
                 </div>
             </div>
