@@ -1,18 +1,17 @@
 {
-  "dependencies": {
-    "@chakra-ui/core": "^0.3.2",
-    "@emotion/core": "^10.0.17",
-    "@emotion/styled": "^10.0.17",
-    "emotion-theming": "^10.0.19",
-    "next": "^9.0.6",
-    "react": "^16.10.0",
-    "react-dom": "^16.10.0"
-  },
   "name": "theflow",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/Hackbit/reactriot2019-hexagon.git",
   "author": "Vista1nik <16061243+Vista1nik@users.noreply.github.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "next": "^9.0.6",
+    "react": "^16.10.0",
+    "react-dom": "^16.10.0"
+  },
+  "scripts": {
+    "dev": "next ."
+  }
 }

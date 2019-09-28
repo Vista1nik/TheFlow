@@ -6,8 +6,8 @@ export default {
         yellow: '#FFC65B'
     },
     fonts: {
-        body: "Montserrat, sans-serif",
-        heading: "Raleway, serif",
+        body: "'Montserrat', sans-serif",
+        heading: "'Raleway', serif",
         mono: "Menlo, monospace",
     }
 }
