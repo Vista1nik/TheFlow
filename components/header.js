@@ -135,7 +135,7 @@ export default class Header extends Component {
                             <p>- - -</p>
                             <a href='/dashboard' className='link'>Dashboard</a>
                             <p>- - -</p>
-                            <a href='/' className='link'>About</a>
+                            <a href='/about' className='link'>About</a>
                             
                             {this.state.loggedin ? 
                             <div>
@@ -170,7 +170,7 @@ export default class Header extends Component {
                         <div className="links">
                             <a href='/' className='link'>Home</a>
                             <a href='/dashboard' className='link'>Dashboard</a>
-                            <a href='/' className='link'>About</a>
+                            <a href='/about' className='link'>About</a>
                         </div>
                     </div>
                     <div>

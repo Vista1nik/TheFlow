@@ -91,7 +91,7 @@ class AuthForm extends Component {
 
     authUser = () => {
         firebase.auth().sendSignInLinkToEmail(this.email.current.value, {
-            url: 'http://localhost:3000/service/login',
+            url: 'http://hexagon.2019.reactriot.com/service/login',
             handleCodeInApp: true,
         })
         .then(() => {

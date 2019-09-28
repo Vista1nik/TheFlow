@@ -278,6 +278,7 @@ class FlowObject extends Component {
                         .edit {
                             margin-bottom: 24px;
                         }
+                    }
                 `}</style>
                 <div className="flow-container">
                     <img src='/static/dots.svg' />
@@ -355,6 +356,7 @@ class CreateFlowObject extends Component {
                         box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
                         width: 142px;
                         height: 142px;
+                        margin: 24px 0;
                         display: flex;
                         margin-left: 324px;
                         justify-content: center;
