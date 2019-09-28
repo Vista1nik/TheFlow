@@ -202,7 +202,7 @@ class FlowCard extends Component {
                         </div>
 
                     </div>
-                    <a>
+                    <a href={`/flow?id=${this.props.id}`}>
                         <img src="/static/right-icon.svg" />
                     </a>
                 </div>
