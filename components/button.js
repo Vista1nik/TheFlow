@@ -3,9 +3,12 @@ export default (props) => (
         <style jsx>{`
             a {
                 padding: ${props.width} 32px;
+                display: block;
+                width: fit-content;
                 background-color: ${props.bgColor};
                 color: #fff;
                 border-radius: 8px;
+                text-decoration: none;
                 border: 1px solid ${props.bgColor};
                 font-weight: 500;
                 cursor: pointer;
@@ -19,6 +22,6 @@ export default (props) => (
                 color: ${props.bgColor};
             }    
         `}</style>
-        <a>{props.children}</a>
+        <a className={props.className} onClick={props.onClick} href={props.href}>{props.children}</a>
     </div>
 ) 

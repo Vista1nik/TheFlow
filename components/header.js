@@ -1,6 +1,25 @@
 import React, { Component } from 'react'
+import firebase from 'firebase'
 
 export default class Header extends Component {
+
+    state = {
+        loggedin: false
+    }
+
+    componentDidMount() {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    this.setState({
+                        loggedin: true
+                    })
+                } else {
+                    console.log("No user detected!")
+                }
+        })
+    }
+    
+
     render() {
         return (
             <div>
@@ -17,6 +36,7 @@ export default class Header extends Component {
                         display: flex;
                         padding: 12px 24px;
                         align-items: center;
+                        justify-content: space-between;
                         box-shadow: ${this.props.shadow ? '0px 2px 4px rgba(0, 0, 0, 0.1);' : ''}
                     }
 
@@ -34,6 +54,7 @@ export default class Header extends Component {
                         color: #000;
                         font-family: 'Montserrat', sans-serif;
                         font-size: 18px;
+                        cursor: pointer;
                     }
 
                     .link:hover {
@@ -49,8 +70,12 @@ export default class Header extends Component {
                             <a href='/' className='link'>About</a>
                         </div>
                     </div>
-                    <div>
-                        
+                    <div className="header-right">
+                        {this.state.loggedin ? <a onClick={() => {
+                            firebase.auth().signOut().then(() => {
+                                window.location = '/'
+                            })
+                        }} className='link'>Log-out</a> : ''}
                     </div>
                 </div>
             </div>

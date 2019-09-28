@@ -54,12 +54,12 @@ export default class Index extends Component {
                     <div className="container">
                         <div className="landing">
                             <div className="landing-text-container">
-                                <h1>Keep all your <br /><span className="highlight">articles</span>, <span className="highlight">books</span> and <span className="highlight">courses</span> <br />in <span className="highlight">The</span>Flow</h1>
+                                <h1>Keep links to all your <br /><span className="highlight">articles</span>, <span className="highlight">books</span> and <span className="highlight">courses</span> <br />in <span className="highlight">The</span>Flow</h1>
                                 <p>
                                     In TheFlow you can easily save and later access links to important web-sites on any device. 
                                 </p>
                                 <div className="landing-action">
-                                    <Button width={'12px'} bgColor={'#3C72FF'}>Sign-in</Button>
+                                    <Button href="/auth" width={'12px'} bgColor={'#3C72FF'}>Get started</Button>
                                 </div>
                             </div>
                             <img className='landing-art' src={'/static/landing.svg'} />
