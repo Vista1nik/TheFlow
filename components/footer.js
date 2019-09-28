@@ -4,7 +4,7 @@ export default () => (
             div {
                 display: flex;
                 justify-content: center;
-                margin: 36px;
+                margin: 48px;
                 font-family: 'Montserrat', sans-serif;
             }
 

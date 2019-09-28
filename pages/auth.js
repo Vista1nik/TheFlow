@@ -102,6 +102,15 @@ class AuthForm extends Component {
             alert(error)
         });
     }
+    
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                window.location = '/dashboard'
+            }
+        })
+    }
+    
 
     render() {
         return (
@@ -110,7 +119,7 @@ class AuthForm extends Component {
                     <div>
                         <p>Email</p>
                         <input ref={this.email} type="email" placeholder="Type here your email"/>
-                        <Button onClick={this.authUser} className="auth-signin" width={'12px'} bgColor={'#3C72FF'}>Sign-in</Button>
+                        <Button onClick={this.authUser} className="auth-signin" height={'12px'} bgColor={'#3C72FF'}>Sign-in</Button>
                     </div>
                     :
                     <div>

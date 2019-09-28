@@ -59,7 +59,7 @@ export default class Index extends Component {
                                     In TheFlow you can easily save and later access links to important web-sites on any device. 
                                 </p>
                                 <div className="landing-action">
-                                    <Button href="/auth" width={'12px'} bgColor={'#3C72FF'}>Get started</Button>
+                                    <Button href="/auth" height={'12px'} bgColor={'#3C72FF'}>Get started</Button>
                                 </div>
                             </div>
                             <img className='landing-art' src={'/static/landing.svg'} />

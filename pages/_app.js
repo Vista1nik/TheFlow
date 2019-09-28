@@ -1,5 +1,6 @@
 import React from 'react'
 import App from 'next/app'
+import Head from 'next/head'
 import firebase from 'firebase'
 
 class MyApp extends App {
@@ -38,7 +39,14 @@ class MyApp extends App {
 
   render() {
     const { Component, pageProps } = this.props
-    return <Component {...pageProps} />
+    return (
+      <>
+        <Head>
+          <title>TheFlow</title>
+        </Head>
+        <Component {...pageProps} />
+      </>
+    )
   }
 }
   

@@ -2,7 +2,7 @@ export default (props) => (
     <div>
         <style jsx>{`
             a {
-                padding: ${props.width} 32px;
+                padding: ${props.height} 32px;
                 display: block;
                 width: fit-content;
                 background-color: ${props.bgColor};

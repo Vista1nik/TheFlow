@@ -64,9 +64,12 @@ export default class Header extends Component {
                 `}</style>
                 <div className='header'>
                     <div className="header-left">
-                        <img src="/static/logo.svg" />
+                        <a href='/'>
+                            <img src="/static/logo.svg" />
+                        </a>
                         <div className="links">
                             <a href='/' className='link'>Home</a>
+                            <a href='/dashboard' className='link'>Dashboard</a>
                             <a href='/' className='link'>About</a>
                         </div>
                     </div>
