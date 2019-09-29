@@ -22,7 +22,9 @@ export default class Login extends Component {
                         .set({
                             flowname: 'Default Flow',
                             flowdesc: 'Your first flow.',
-                            flow: []
+                            flow: [],
+                            share: false,
+                            galleryId: ''
                         })
                         .then(res => {
                             window.localStorage.removeItem('emailForSignIn');
