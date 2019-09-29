@@ -116,10 +116,16 @@ export default class Dashboard extends Component {
                             <p className='tip'>TIP: To edit information about flow click on title or description.</p>
                             <p className='tip'>To open Flow, click on arrow in top right corner of card.</p>
                         </div>
-                        <div className="dashboard-grid">
-                            {this.state.flows.map(flow => <FlowCard userid={this.state.userid} id={flow.id} title={flow.flowname} desc={flow.flowdesc} />)}
-                            <CreateFlowCard userid={this.state.userid} />
-                        </div>
+                        {!this.state.userid ? 
+                            <div align="center">
+                                <img src={'/static/loading.gif'} />
+                            </div> 
+                            : 
+                            <div className="dashboard-grid">
+                                {this.state.flows.map(flow => <FlowCard userid={this.state.userid} id={flow.id} title={flow.flowname} desc={flow.flowdesc} />)}
+                                <CreateFlowCard userid={this.state.userid} />
+                            </div>
+                        }
                     </div>
                 </div>
                 <Footer />
@@ -151,12 +157,14 @@ class FlowCard extends Component {
     }
 
     deleteFlow = () => {
-        let db = firebase.firestore()
-        db.collection('flows').doc(this.props.userid).collection('userflows').doc(this.props.id)
-        .delete()
-        .then(res => {
-            
-        })
+        if(confirm('Please confirm flow DELETION.')) {
+            let db = firebase.firestore()
+            db.collection('flows').doc(this.props.userid).collection('userflows').doc(this.props.id)
+            .delete()
+            .then(res => {
+                
+            })
+        }
     }
 
     render() {

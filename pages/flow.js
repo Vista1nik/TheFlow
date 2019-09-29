@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Header from '../components/header'
 import Button from '../components/button'
 import Footer from '../components/footer'
+
 import axios from 'axios'
 
 import TextareaAutosize from 'react-autosize-textarea';
@@ -46,7 +47,7 @@ export default class Flow extends Component {
                     flow: newFlow
                 })
                 .then(res => {
-                    window.location.reload(true)
+                    
                 })
             }
         })
@@ -64,7 +65,7 @@ export default class Flow extends Component {
                     flow: newFlow
                 })
                 .then(res => {
-                    window.location.reload(true)
+                    
                 })
             }
         })
@@ -82,7 +83,7 @@ export default class Flow extends Component {
                     flow: newFlow
                 })
                 .then(res => {
-                    window.location.reload(true)
+                    
                 })
             }
         })
@@ -93,9 +94,12 @@ export default class Flow extends Component {
             if (user) {
                 let db = firebase.firestore()
                 // Global flows and user flows
-                db.collection('flows').doc(user.uid).collection('userflows').doc(this.props.query.id).get()
-                .then((data) => {
-                    
+                this.setState({
+                    flow: [],
+                    info: null
+                })
+                db.collection('flows').doc(user.uid).collection('userflows').doc(this.props.query.id)
+                .onSnapshot(data => {
                     let flow = data.data().flow
                     let flowWithIndex = [];
                     flow.map((flowobj, index) => {
@@ -160,7 +164,7 @@ export default class Flow extends Component {
                     </div> 
                     :
                     <div>
-                        Loading...
+                        <img src={'/static/loading.gif'} />
                     </div>
                     }
                 </div>
@@ -176,16 +180,21 @@ class FlowObject extends Component {
         title: this.props.title,
         desc: this.props.desc,
         url: this.props.url,
-        favicon: this.props.favicon
+        favicon: this.props.favicon,
+        loading: false
     }
 
     getMeta = () => {
+        this.setState({
+            loading: true
+        })
         axios.get('/api/metadata?url=' + getURL(this.state.url))
         .then(res => {
             this.setState({
                 title: res.data.meta.title,
                 desc: res.data.meta.description,
-                favicon: res.data.meta.icon
+                favicon: res.data.meta.icon,
+                loading: false
             })
         })
     }
@@ -263,6 +272,15 @@ class FlowObject extends Component {
                         width: 48px;
                     }
 
+                    .action {
+                        margin-top: 12px;
+                    }
+
+                    .loading {
+                        height: 64px;
+                        width: 64px;
+                    }
+
                     @media screen and (max-width: 1092px) {
                         .circle-container {
                             display: flex;
@@ -285,7 +303,7 @@ class FlowObject extends Component {
                     <div className="circle-container">
                         <a href={getURL(this.state.url)}>
                             <div className="circle">
-                                <img className="favicon" src={this.state.favicon} />
+                                {this.state.loading ? <img src={'/static/loading.gif'} /> : <img className="favicon" src={this.state.favicon} />}
                             </div>
                         </a>
                         <div className="edit">
@@ -327,18 +345,26 @@ class CreateFlowObject extends Component {
         title: '',
         desc: '',
         url: null,
-        favicon: '/static/plus.svg'
+        favicon: '/static/plus.svg',
+        edit: false,
+        loading: false
     }
 
     getMeta = () => {
-        axios.get('/api/metadata?url=' + getURL(this.state.url))
-        .then(res => {
+        if (this.state.url) {
             this.setState({
-                title: res.data.meta.title,
-                desc: res.data.meta.description,
-                favicon: res.data.meta.icon
+                loading: true
             })
-        })
+            axios.get('/api/metadata?url=' + getURL(this.state.url))
+            .then(res => {
+                this.setState({
+                    title: res.data.meta.title,
+                    desc: res.data.meta.description,
+                    favicon: res.data.meta.icon,
+                    loading: false
+                })
+            })
+        }
     }
 
     render() {
@@ -393,6 +419,10 @@ class CreateFlowObject extends Component {
                         margin-left: 24px;
                     }
 
+                    .action {
+                        margin-top: 12px;
+                    }
+
                     /* For Input */
                     .h1 {
                         font-size: 24px;
@@ -432,21 +462,32 @@ class CreateFlowObject extends Component {
                     <div className="circle-container">
                         <a href={getURL(this.state.url)}>
                             <div className="circle">
-                                <img className="favicon" src={this.state.favicon} />
+                                {this.state.loading ? <img src={'/static/loading.gif'} /> : <img className="favicon" src={this.state.favicon} />}
                             </div>
                         </a>
                         <div className="edit">
                             <TextareaAutosize style={{fontSize: 24, fontFamily: 'Raleway, sans-serif', fontWeight: 700, border: 'none', resize: 'vertical', padding: 0, width: 300}} onChange={e => this.setState({title: e.target.value, edit: true})}placeholder={'Type here a title.'} value={this.state.title} />
                             <input onBlur={this.getMeta} onChange={e => this.setState({url: e.target.value, edit: true})} className="p url" placeholder={"Paste here URL to web-site"} value={this.state.url} />
                             <TextareaAutosize style={{fontSize: 18, fontFamily: 'Montserrat, sans-serif', border: 'none', resize: 'vertical', padding: 0, width: 300}} onChange={e => this.setState({desc: e.target.value, edit: true})} placeholder={"Type here note or something related to web-site"} value={this.state.desc} />
-                            {this.state.edit ? <Button marginRight={'12px'} onClick={() => {
+                            {this.state.edit ? 
+                            <div className='action'>
+                                <Button marginRight={'12px'} onClick={() => {
                                 this.props.createFlowObject({
                                     title: this.state.title,
                                     desc: this.state.desc ? this.state.desc : '',
                                     url: this.state.url,
                                     favicon: this.state.favicon
                                 })
-                            }} height={'8px'} bgColor={'#3C72FF'}>Create</Button> : ''}
+                                this.setState({
+                                    title: '',
+                                    desc: '',
+                                    url: '',
+                                    favicon: '/static/plus.svg',
+                                    edit: false,
+                                    loading: false
+                                })
+                            }} height={'8px'} bgColor={'#3C72FF'}>Create</Button>
+                            </div> : ''}
                         </div>
                     </div>
                 </div>

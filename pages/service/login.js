@@ -46,8 +46,8 @@ export default class Login extends Component {
         return (
             <div>
                 <Header shadow={true} />
-                <div>
-                    <p>Processing...</p>
+                <div style={{marginTop: 24}} align="center">
+                        <img src={'/static/loading.gif'} />
                 </div>
                 <Footer />
             </div>
