@@ -21,8 +21,12 @@ export default class Dashboard extends Component {
             if (user) {
                 let db = firebase.firestore()
                 // Global flows and user flows
-                db.collection('flows').doc(user.uid).collection('userflows').get()
-                .then(data => {
+                db.collection('flows').doc(user.uid).collection('userflows')
+                .onSnapshot(data => {
+                    this.setState({
+                        flows: [],
+                        userid: null
+                    })
                     if (data.empty) {
                         this.setState({
                             flows: false
@@ -142,7 +146,7 @@ class FlowCard extends Component {
             flowdesc: this.state.desc
         })
         .then(res => {
-            window.location = '/dashboard'
+            
         })
     }
 
@@ -151,7 +155,7 @@ class FlowCard extends Component {
         db.collection('flows').doc(this.props.userid).collection('userflows').doc(this.props.id)
         .delete()
         .then(res => {
-            window.location = '/dashboard'
+            
         })
     }
 
@@ -233,7 +237,7 @@ class CreateFlowCard extends Component {
         this.state = {
             edit: false,
             title: this.props.title,
-            desc: this.props.desc
+            desc: this.props.desc ? this.props.desc : ''
         }
     }
     
@@ -246,7 +250,11 @@ class CreateFlowCard extends Component {
             flow: []
         })
         .then(res => {
-            window.location = '/dashboard'
+            this.setState({
+                title: '',
+                desc: '',
+                edit: false
+            })
         })
     }
 

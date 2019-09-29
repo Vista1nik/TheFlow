@@ -10,6 +10,7 @@ export default (props) => (
                 color: #fff;
                 border-radius: 8px;
                 text-decoration: none;
+                font-family: 'Montserrat', sans-serif;
                 border: 1px solid ${props.bgColor};
                 font-weight: 500;
                 cursor: pointer;
