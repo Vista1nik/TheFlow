@@ -38,6 +38,28 @@ export default class About extends Component {
                     .about-art {
                         height: 400px;
                     }
+
+                    @media screen and (max-width: 650px) {
+                        .about-art {
+                            height: 325px;
+                        }
+
+                        .about {
+                            min-width: 100px;
+                            margin: 24px;
+                        }
+
+                        h1 {
+                            font-size: 42px;
+                            font-family: 'Raleway', sans-serif;
+                        }
+
+                        p {
+                            font-size: 18px;
+                            font-family: 'Montserrat', sans-serif;
+                        }
+
+                    }
                 `}</style>
                 <Header shadow={true} />
                 <div className="about-container">

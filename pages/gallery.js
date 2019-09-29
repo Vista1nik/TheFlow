@@ -112,8 +112,10 @@ export default class Dashboard extends Component {
                     <div>
                         <div align="center">
                             <img className='dashboard-art' src={'/static/gallery.svg'} />
-                            <h1>Welcome to your Gallery</h1>
+                            <h1>Welcome to the Gallery</h1>
                             <p>Here you can find flows from other people!</p>
+                            <p>You can share you Flow to the Gallery on your flow page.</p>
+                            <p>Click on card to open flow.</p>
                         </div>
                         {!this.state.flows[0] ? 
                             <div align="center">
