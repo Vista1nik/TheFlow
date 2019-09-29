@@ -83,20 +83,27 @@ class AuthForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            sended: false
+            sended: false,
+            loading: false
         }
 
         this.email = React.createRef()
     }
 
     authUser = () => {
+        this.setState({
+            loading: true
+        })
         firebase.auth().sendSignInLinkToEmail(this.email.current.value, {
             url: 'https://theflow.now.sh/service/login',
             handleCodeInApp: true,
         })
         .then(() => {
             window.localStorage.setItem('emailForSignIn', this.email.current.value);
-            alert('Check your email for link!')
+            this.setState({
+                sended: true,
+                loading: false
+            })
         })
         .catch(error => {
             alert(error)
@@ -119,11 +126,11 @@ class AuthForm extends Component {
                     <div>
                         <p>Email</p>
                         <input type="email" id="email" ref={this.email} type="email" placeholder="Type here your email"/>
-                        <Button onClick={this.authUser} className="auth-signin" height={'12px'} bgColor={'#3C72FF'}>Sign-in</Button>
+                        {this.state.loading ? <img style={{width: 32, display: 'block', marginTop: 24}} src={'/static/loading.gif'} /> : <Button onClick={this.authUser} className="auth-signin" height={'12px'} bgColor={'#3C72FF'}>Sign-in</Button>}
                     </div>
                     :
                     <div>
-                        <p>Check your email for link!</p>
+                        <p>🔮 Check your email for link!</p>
                     </div>
                 }
             </div>

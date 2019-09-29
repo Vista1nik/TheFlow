@@ -40,7 +40,7 @@ export default class Dashboard extends Component {
                     })
                     if (data.size == flows.length) {
                         this.setState({
-                            flows: flows,
+                            flows: flows.reverse(),
                             userid: user.uid
                         })
                     }
