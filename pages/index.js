@@ -34,6 +34,7 @@ export default class Index extends Component {
 
                     .landing-art {
                         height: 700px;
+                        margin-bottom: 7%;
                     }
 
                     .highlight {
@@ -47,7 +48,7 @@ export default class Index extends Component {
                     }
 
                     .container {
-                        margin: 48px;
+                        margin: 0 48px;
                     }
 
                     @media screen and (max-width: 786px) {
