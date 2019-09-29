@@ -563,10 +563,6 @@ class Share extends Component {
                         cursor: pointer;
                         color: #3C72FF;
                     }
-
-                    .share-icon {
-                        =
-                    }
                 `}</style>
                 {this.props.share ? 
                 <div className='share-true'>
