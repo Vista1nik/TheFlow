@@ -24,7 +24,7 @@ export default class Auth extends Component {
 
                     input {
                         padding: 12px;
-                        border: 1px solid #666;
+                        border: 1px solid #ccc;
                         border-radius: 8px;
                         width: 300px;Sign-in
                     }

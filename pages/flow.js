@@ -32,7 +32,8 @@ export default class Flow extends Component {
 
     state = {
         flow: [],
-        info: null
+        info: null,
+        userid: null
     }
 
     updateFlowObj = (index, obj) => {
@@ -48,6 +49,21 @@ export default class Flow extends Component {
                 })
                 .then(res => {
                     
+                })
+            }
+        })
+    }
+
+    share = (toggle) => {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                let db = firebase.firestore()
+                db.collection('flows').doc(user.uid).collection('userflows').doc(this.props.query.id)
+                .update({
+                    share: toggle
+                })
+                .then(res => {
+                    return true
                 })
             }
         })
@@ -96,7 +112,8 @@ export default class Flow extends Component {
                 // Global flows and user flows
                 this.setState({
                     flow: [],
-                    info: null
+                    info: null,
+                    userid: null
                 })
                 db.collection('flows').doc(user.uid).collection('userflows').doc(this.props.query.id)
                 .onSnapshot(data => {
@@ -109,7 +126,8 @@ export default class Flow extends Component {
                     if (flowWithIndex.length == flow.length) {
                         this.setState({
                             flow: flowWithIndex,
-                            info: data.data()
+                            info: data.data(),
+                            userid: user.uid
                         })
                     }
 
@@ -155,7 +173,7 @@ export default class Flow extends Component {
                             <h1>{this.state.info.flowname}</h1>
                             <p>{this.state.info.flowdesc}</p>
                             <p className='tip'>TIP: To delete Flow object click on title or description, the "Delete" button will appear.</p>
-
+                            <Share shareFunction={this.share} share={this.state.info.share} userid={this.state.userid} flowid={this.props.query.id} />
                         </div>
                         {this.state.flow.map(obj => {
                             return <FlowObject deleteFlows={this.deleteFlowObj} updateFlows={this.updateFlowObj} favicon={obj.favicon} index={obj.index} url={obj.url} title={obj.title} desc={obj.desc} />
@@ -491,6 +509,80 @@ class CreateFlowObject extends Component {
                         </div>
                     </div>
                 </div>
+            </div>
+        )
+    }
+}
+
+class Share extends Component {
+    render() {
+        return (
+            <div className="share">
+                <style jsx>{`
+                    input {
+                        padding: 8px;
+                        height: 24px;
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        width: 300px;
+                    }
+
+                    h1 {
+                        font-size: 46px;
+                        font-family: 'Raleway', sans-serif;
+                    }
+
+                    p {
+                        font-size: 18px;
+                        font-family: 'Montserrat', sans-serif;
+                    }
+
+                    .share {
+                        display: flex;
+                        justify-content: center;
+                        margin: 24px;
+                    }
+
+                    .share-link {
+                        margin-left: 18px;
+                    }
+
+                    .share-true {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .share-stop {
+                        color: #F11F4C;
+                        cursor: pointer;
+                        margin-left: 18px;
+                    }
+
+                    .share-btn {
+                        margin-left: 18px;
+                        cursor: pointer;
+                        color: #3C72FF;
+                    }
+
+                    .share-icon {
+                        =
+                    }
+                `}</style>
+                {this.props.share ? 
+                <div className='share-true'>
+                    <p>Share link: </p>
+                    <input readOnly onFocus={(event) => event.target.select()} onClick={(event) => event.target.select()} className='share-link' value={'https://theflow.now.sh/share?userid=' + this.props.userid + '&flowid=' + this.props.flowid} />
+                    <p onClick={() => {
+                        this.props.shareFunction(false)
+                    }} className="share-stop">Stop Sharing</p>
+                </div>
+                :
+                <div className='share-true'>
+                    <p onClick={() => {
+                        this.props.shareFunction(true)
+                    }} className="share-btn">Share this flow via URL</p>
+                </div>
+            }
             </div>
         )
     }
