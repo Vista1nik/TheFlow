@@ -517,7 +517,7 @@ class CreateFlowObject extends Component {
 class Share extends Component {
     render() {
         return (
-            <div className="share">
+            <div className="schare">
                 <style jsx>{`
                     input {
                         padding: 8px;
@@ -537,46 +537,59 @@ class Share extends Component {
                         font-family: 'Montserrat', sans-serif;
                     }
 
-                    .share {
+                    /* AdBlock likes to block classes which have 'share' in name */
+
+                    .schare {
                         display: flex;
                         justify-content: center;
                         margin: 24px;
                     }
 
-                    .share-link {
+                    .schare-link {
                         margin-left: 18px;
                     }
 
-                    .share-true {
+                    .schare-true {
                         display: flex;
                         align-items: center;
                     }
 
-                    .share-stop {
+                    .schare-false {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .schare-stop {
                         color: #F11F4C;
                         cursor: pointer;
                         margin-left: 18px;
                     }
 
-                    .share-btn {
+                    .schare-btn {
                         margin-left: 18px;
                         cursor: pointer;
                         color: #3C72FF;
                     }
+
+                    @media screen and (max-width: 1092px) {
+                        .schare-true {
+                            flex-direction: column;
+                        }
+                    }
                 `}</style>
                 {this.props.share ? 
-                <div className='share-true'>
+                <div className='schare-true'>
                     <p>Share link: </p>
-                    <input readOnly onFocus={(event) => event.target.select()} onClick={(event) => event.target.select()} className='share-link' value={'https://theflow.now.sh/share?userid=' + this.props.userid + '&flowid=' + this.props.flowid} />
+                    <input readOnly onFocus={(event) => event.target.select()} onClick={(event) => event.target.select()} className='schare-link' value={'https://theflow.now.sh/share?userid=' + this.props.userid + '&flowid=' + this.props.flowid} />
                     <p onClick={() => {
                         this.props.shareFunction(false)
-                    }} className="share-stop">Stop Sharing</p>
+                    }} className="schare-stop">Stop Sharing</p>
                 </div>
                 :
-                <div className='share-true'>
+                <div className='schare-false'>
                     <p onClick={() => {
                         this.props.shareFunction(true)
-                    }} className="share-btn">Share this flow via URL</p>
+                    }} className="schare-btn">Share this flow via URL</p>
                 </div>
             }
             </div>
