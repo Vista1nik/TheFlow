@@ -98,7 +98,7 @@ export default class Header extends Component {
                         flex-direction: column;
                     }
 
-                    @media screen and (max-width: 786px) {
+                    @media screen and (max-width: 927px) {
                         .mobile-overlay {
                             height: 100%;
                             width: 100%;
@@ -132,14 +132,16 @@ export default class Header extends Component {
                     <div align='center' className="mobile-overlay">
                         <div className='mobile-overlay-layout'>
                             <a href='/' className='link'>Home</a>
-                            <p>- - -</p>
+                            <p>---</p>
+                            <a href='/gallery' className='link'>Gallery</a>
+                            <p>---</p>
                             <a href='/dashboard' className='link'>Dashboard</a>
-                            <p>- - -</p>
+                            <p>---</p>
                             <a href='/about' className='link'>About</a>
                             
                             {this.state.loggedin ? 
                             <div>
-                                <p>- - -</p>
+                                <p>---</p>
                                 
                                 <div className="header-right-mobile">
                                     <Gravatar className="avatar" email={this.state.email} />
@@ -153,7 +155,7 @@ export default class Header extends Component {
                                 }} className='link' id="logout">Log-out</a>
                             </div> 
                             : ''}
-                            <p>- - -</p>
+                            <p>---</p>
                             <a onClick={() => {
                                 this.setState({
                                     overlay: false
@@ -169,6 +171,7 @@ export default class Header extends Component {
                         </a>
                         <div className="links">
                             <a href='/' className='link'>Home</a>
+                            <a href='/gallery' className='link'>Gallery</a>
                             <a href='/dashboard' className='link'>Dashboard</a>
                             <a href='/about' className='link'>About</a>
                         </div>

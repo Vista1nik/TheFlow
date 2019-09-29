@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import Header from '../components/header'
 import Button from '../components/button'
 import Footer from '../components/footer'
+import uuid from 'uuid/v4'
+import md5 from 'md5'
 
 import axios from 'axios'
 
@@ -64,6 +66,31 @@ export default class Flow extends Component {
                 })
                 .then(res => {
                     return true
+                })
+            }
+        })
+    }
+
+    shareToGallery = (userid) => {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                let db = firebase.firestore()
+                let galleryId = uuid();
+
+                db.collection('gallery').doc(galleryId)
+                .set({
+                    flowid: this.props.query.id,
+                    userid: user.uid,
+                    emailhash: md5(user.email)
+                })
+                .then(res => {
+                    db.collection('flows').doc(userid).collection('userflows').doc(this.props.query.id)
+                    .update({
+                        galleryId: galleryId
+                    })
+                    .then(res => {
+                        return true
+                    })
                 })
             }
         })
@@ -173,7 +200,7 @@ export default class Flow extends Component {
                             <h1>{this.state.info.flowname}</h1>
                             <p>{this.state.info.flowdesc}</p>
                             <p className='tip'>TIP: To delete Flow object click on title or description, the "Delete" button will appear.</p>
-                            <Share shareFunction={this.share} share={this.state.info.share} userid={this.state.userid} flowid={this.props.query.id} />
+                            <Share shareToGallery={this.shareToGallery} galleryId={this.state.info.galleryId} shareFunction={this.share} share={this.state.info.share} userid={this.state.userid} flowid={this.props.query.id} />
                         </div>
                         {this.state.flow.map(obj => {
                             return <FlowObject deleteFlows={this.deleteFlowObj} updateFlows={this.updateFlowObj} favicon={obj.favicon} index={obj.index} url={obj.url} title={obj.title} desc={obj.desc} />
@@ -342,6 +369,9 @@ class FlowObject extends Component {
                                     url: this.state.url,
                                     favicon: this.state.favicon
                                 })
+                                this.setState({
+                                    edit: false
+                                })
                             }} height={'8px'} bgColor={'#3C72FF'}>Save changes</Button>
                             <Button onClick={() => {
                                 if (confirm('Please confirm deletion of flow object.')) {
@@ -362,7 +392,7 @@ class CreateFlowObject extends Component {
     state = {
         title: '',
         desc: '',
-        url: null,
+        url: '',
         favicon: '/static/plus.svg',
         edit: false,
         loading: false
@@ -565,10 +595,20 @@ class Share extends Component {
                         margin-left: 18px;
                     }
 
+                    .schare-gallery {
+                        color: #3C72FF;
+                        cursor: pointer;
+                        margin-left: 18px;
+                    }
+
                     .schare-btn {
                         margin-left: 18px;
                         cursor: pointer;
                         color: #3C72FF;
+                    }
+
+                    .schare-true-container {
+                        flex-direction: column;
                     }
 
                     @media screen and (max-width: 1092px) {
@@ -578,12 +618,23 @@ class Share extends Component {
                     }
                 `}</style>
                 {this.props.share ? 
-                <div className='schare-true'>
-                    <p>Share link: </p>
-                    <input readOnly onFocus={(event) => event.target.select()} onClick={(event) => event.target.select()} className='schare-link' value={'https://theflow.now.sh/share?userid=' + this.props.userid + '&flowid=' + this.props.flowid} />
-                    <p onClick={() => {
-                        this.props.shareFunction(false)
-                    }} className="schare-stop">Stop Sharing</p>
+                <div className="schare-true-container">
+                    <div className='schare-true'>
+                        <p>Share link: </p>
+                        <input readOnly onFocus={(event) => event.target.select()} onClick={(event) => event.target.select()} className='schare-link' value={'https://theflow.now.sh/share?userid=' + this.props.userid + '&flowid=' + this.props.flowid} />
+                    </div>
+                    {this.props.galleryId ? '' :                     
+                        <div>
+                            <p onClick={() => {
+                                if(confirm("Warning: You'll can't stop sharing after adding Flow to gallery.")) {
+                                    this.props.shareToGallery(this.props.userid)
+                                }
+                            }} className="schare-gallery">Share to Gallery</p>
+                            <p onClick={() => {
+                                this.props.shareFunction(false)
+                            }} className="schare-stop">Stop Sharing</p>
+                        </div>
+                    }
                 </div>
                 :
                 <div className='schare-false'>

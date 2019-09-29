@@ -5,6 +5,7 @@ import Button from '../components/button'
 import Footer from '../components/footer'
 
 import firebase, { firestore } from 'firebase'
+import TextareaAutosize from 'react-autosize-textarea';
 import uuid from 'uuid/v4'
 
 
@@ -79,7 +80,7 @@ export default class Dashboard extends Component {
                     }
                     
                     .dashboard-art {
-                        height: 300px;
+                        height: 400px;
                     }
 
                     .dashboard-grid {
@@ -91,6 +92,11 @@ export default class Dashboard extends Component {
                         grid-row-gap: 20px;
                     }
 
+                    @media screen and (max-width: 425px) {
+                        .dashboard-art {
+                            height: 300px;
+                        }
+                    }
 
                     @media screen and (max-width: 1092px) {
 
@@ -122,7 +128,7 @@ export default class Dashboard extends Component {
                             </div> 
                             : 
                             <div className="dashboard-grid">
-                                {this.state.flows.map(flow => <FlowCard userid={this.state.userid} id={flow.id} title={flow.flowname} desc={flow.flowdesc} />)}
+                                {this.state.flows.map(flow => <FlowCard userid={this.state.userid} galleryId={flow.galleryId} id={flow.id} title={flow.flowname} desc={flow.flowdesc} />)}
                                 <CreateFlowCard userid={this.state.userid} />
                             </div>
                         }
@@ -159,11 +165,17 @@ class FlowCard extends Component {
     deleteFlow = () => {
         if(confirm('Please confirm flow DELETION.')) {
             let db = firebase.firestore()
-            db.collection('flows').doc(this.props.userid).collection('userflows').doc(this.props.id)
-            .delete()
-            .then(res => {
-                
-            })
+            if (this.props.galleryId) {
+                db.collection('flows').doc(this.props.userid).collection('userflows').doc(this.props.id)
+                .delete()
+                .then(res => {
+                    db.collection('gallery').doc(this.props.galleryId)
+                    .delete()
+                })
+            } else {
+                db.collection('flows').doc(this.props.userid).collection('userflows').doc(this.props.id)
+                .delete()
+            }
         }
     }
 
@@ -191,6 +203,15 @@ class FlowCard extends Component {
                         margin: 10px 0;
                         padding: 0;
                     }
+
+                    textarea {
+                        border: solid 0px;
+                        display: block;
+                        width: 200px;
+                        margin: 10px 0;
+                        padding: 0;
+                    }
+
 
                     /* For input */
 
@@ -222,14 +243,14 @@ class FlowCard extends Component {
                 <div className='card'>
                     <div>
                         <input onChange={e => this.setState({title: e.target.value, edit: true})} className="h1" placeholder={this.props.title} value={this.state.title} />
-                        <input onChange={e => this.setState({desc: e.target.value, edit: true})} className="p" placeholder={this.props.desc} value={this.state.desc} />
+                        <TextareaAutosize style={{fontSize: 18, fontFamily: 'Montserrat, sans-serif', border: 'none', resize: 'vertical', padding: 0, width: 300, marginBottom: 12}} onChange={e => this.setState({desc: e.target.value, edit: true})} className="p" placeholder={this.props.desc} value={this.state.desc} />
                         <div className="card-action">
                             {this.state.edit ? <Button marginRight={'12px'} onClick={this.updateFlowInfo} height={'8px'} bgColor={'#3C72FF'}>Save changes</Button> : ''}
                             <Button onClick={this.deleteFlow} height={'8px'} bgColor={'#F11F4C'}>Delete</Button>
                         </div>
 
                     </div>
-                    <a href={`/flow?id=${this.props.id}`}>
+                    <a style={{marginTop: 10}} href={`/flow?id=${this.props.id}`}>
                         <img src="/static/right-icon.svg" />
                     </a>
                 </div>
@@ -255,7 +276,9 @@ class CreateFlowCard extends Component {
         .set({
             flowname: this.state.title,
             flowdesc: this.state.desc,
-            flow: []
+            flow: [],
+            share: false,
+            galleryId: ''
         })
         .then(res => {
             this.setState({
@@ -321,11 +344,11 @@ class CreateFlowCard extends Component {
                 `}</style>
                 <div className='card'>
                     <div>
-                        <input onChange={e => this.setState({title: e.target.value, edit: true})} className="h1" placeholder={'Title'} value={this.state.title} />
-                        <input onChange={e => this.setState({desc: e.target.value, edit: true})} className="p" placeholder={"Description"} value={this.state.desc} />
+                        <input onChange={e => this.setState({title: e.target.value, edit: true})} className="h1" placeholder={'Name your Flow'} value={this.state.title} />
+                        <TextareaAutosize style={{fontSize: 18, fontFamily: 'Montserrat, sans-serif', border: 'none', resize: 'vertical', padding: 0, width: 300, marginBottom: 12}} onChange={e => this.setState({desc: e.target.value, edit: true})} className="p" placeholder={"Describe your Flow"} value={this.state.desc} />
                         {this.state.edit ? <Button onClick={this.createFlow} height={'8px'} bgColor={'#3C72FF'}>Create Flow</Button> : ''}
                     </div>
-                    <a>
+                    <a style={{marginTop: 10}}>
                         <img src="/static/dashboard-plus.svg" />
                     </a>
                 </div>

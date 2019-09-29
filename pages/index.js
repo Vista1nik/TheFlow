@@ -86,6 +86,10 @@ export default class Index extends Component {
                                 </p>
                                 <div className="landing-action">
                                     <Button href="/auth" height={'12px'} bgColor={'#3C72FF'}>Get started</Button>
+                                    <div style={{
+                                        margin: 8
+                                    }} />
+                                    <Button href="/gallery" width={'12px'} height={'12px'} bgColor={'#000'}>See Gallery</Button>
                                 </div>
                             </div>
                             <img className='landing-art' src={'/static/landing.svg'} />
