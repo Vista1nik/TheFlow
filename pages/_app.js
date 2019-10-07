@@ -45,9 +45,7 @@ class MyApp extends App {
           <title>TheFlow</title>
           <link rel="icon" href="/static/favicon.ico" />
           <link rel="manifest" href="/static/manifest.json" />
-          <script src="https://www.reactriot.com/entries/120-hexagon/vote.js" type="text/javascript"></script>
         </Head>
-        <div id="hackbit-vote-widget" />
         <Component {...pageProps} />
       </>
     )
