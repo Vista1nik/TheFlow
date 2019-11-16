@@ -1,6 +1,5 @@
 # TheFlow
-App originally created for ReactRiot 2019 but now open sourced and forgetten.
+Keep links to all your
+articles, books and courses
 
-You can change firebase config to your account and deploy it on your hosting.
-
-And I not going to support it anymore because it two-day app for competition which I successfully lose.
+In TheFlow you can easily save and later access links to important web-sites on any device.
